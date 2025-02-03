@@ -112,8 +112,8 @@
                 <thead class="table-light">
                 <tr>
                     <th v-for="col in columns" @click="sort(col)" class="text-center">
-                        {{ col.label }}
-                        <span v-if="sortKey === col.key"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
+                         {{col.label}}
+                        <span v-if="sortKey.key === col.key"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
                     </th>
                 </tr>
                 </thead>

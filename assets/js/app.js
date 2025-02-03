@@ -108,9 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         return true;
                     })
                     .sort((a, b) => {
-                        if (!this.sortKey) return 0;
-                        const valA = a[this.sortKey];
-                        const valB = b[this.sortKey];
+                        if (!this.sortKey || !this.sortKey.hasOwnProperty('key')) return 0;
+                        const valA = a[this.sortKey.key];
+                        const valB = b[this.sortKey.key];
                         if (this.sortOrder === 'asc') return valA > valB ? 1 : -1;
                         return valA < valB ? 1 : -1;
                     });
