@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const v = new Vue({
         el: '#vue-table-app',
         data: {
+            showSplash: true,
             columns: [
                 {key: 'test_code', label: 'Test Code'},
                 {key: 'test', label: 'Test'},
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 test: '',
                 language: '',
                 search: '',
+                showSplash: true,
             },
             sortKey: '',
             sortOrder: 'asc',
@@ -35,13 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
             // Step 2: Set the value in the `filters.test` model
             if (testFilter) {
                 this.filters.test = testFilter;
+                this.showSplash = false;
             }
 
             if (expiryWithinFilter) {
                 this.filters.expirationWithinDays = expiryWithinFilter;
+                this.showSplash = false;
             }
         },
         methods: {
+            toggleSplash( on = null  ) {
+                if ( on === null ) {
+                    this.showSplash = !this.showSplash;
+                }
+                else {
+                    this.showSplash = on;
+                }
+            },
             clearSearch() {
                 const searchInput = document.getElementById('search');
                 searchInput.value = '';
