@@ -1,6 +1,6 @@
 <?php ?>
 <div id="vue-table-app" class="container">
-    <a href="#" class="order-tests btn btn-primary">Order Tests</a>
+    <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
     <div class="row g-3 mb-3 table-filters">
         <!-- Search Filter -->
         <div class="col-md-6">
@@ -20,7 +20,7 @@
                                </svg>
                          &nbsp; Search</span>
                         </div>
-                        <div class="clear-search"><a href="#">Clear Search</a></div>
+                        <div class="clear-search"><a href="javascript: void(0);" @click="clearSearch">Clear Search</a></div>
                     </div>
                 </div>
             </div>

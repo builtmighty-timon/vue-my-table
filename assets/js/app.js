@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    new Vue({
+
+    const v = new Vue({
         el: '#vue-table-app',
         data: {
             columns: [
@@ -41,6 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         methods: {
+            clearSearch() {
+                const searchInput = document.getElementById('search');
+                searchInput.value = '';
+                this.filters.search = '';
+            },
             uniqueValues(key) {
                 return [...new Set(this.data.map(row => row[key]))];
             },
@@ -54,8 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (this.filters.testCode && row.test_code !== this.filters.testCode) return false;
                         if (this.filters.test && row.test !== this.filters.test) return false;
                         if (this.filters.language && row.language !== this.filters.language) return false;
-
-
 
                         const expiration = new Date(row.expiration_date);
                         const today = new Date();
