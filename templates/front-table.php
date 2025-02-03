@@ -1,64 +1,125 @@
-<div id="vue-table-app">
-    <div class="table-filters">
-        <div>
-            <label>Test Code:</label>
-            <select v-model="filters.testCode">
-                <option value="">All</option>
-                <option v-for="testCode in uniqueValues('test_code')" :key="testCode">
-                    {{ testCode }}
-                </option>
-            </select>
+<?php ?>
+<div id="vue-table-app" class="container">
+    <div class="row g-3 table-filters">
+        <!-- Search Filter -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="search" class="form-label" value="Search">&nbsp;</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input id="search" type="text" class="form-control" v-model="filters.search" placeholder="Search...">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label>Date Range (Expiring):</label>
-            <input type="date" v-model="filters.expirationStart" placeholder="Start Date">
-            <input type="date" v-model="filters.expirationEnd" placeholder="End Date">
+
+        <!-- Test Code Filter -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="test-code" class="form-label">Test Code</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <select id="test-code" class="form-select" v-model="filters.testCode">
+                            <option value="">All</option>
+                            <option v-for="testCode in uniqueValues('test_code')" :key="testCode">
+                                {{ testCode }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label>Test:</label>
-            <select v-model="filters.test">
-                <option value="">All</option>
-                <option v-for="testVal in uniqueValues('test')" :key="testVal">
-                    {{ testVal }}
-                </option>
-            </select>
-        </div>
-        <div>
-            <label>Language:</label>
-            <select v-model="filters.language">
-                <option value="">All</option>
-                <option v-for="lang in uniqueValues('language')" :key="lang">
-                    {{ lang }}
-                </option>
-            </select>
-        </div>
-        <div>
-            <label>Search:</label>
-            <input type="text" v-model="filters.search" placeholder="Search...">
+
+        <!-- Test Filter -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="test" class="form-label">Test</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <select id="test" class="form-select" v-model="filters.test">
+                            <option value="">All</option>
+                            <option v-for="testVal in uniqueValues('test')" :key="testVal">
+                                {{ testVal }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th v-for="col in columns" @click="sort(col)">
-                {{ col.label }}
-                <span v-if="sortKey === col.key"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="row in filteredData" :key="row.test_code">
-            <td>{{ row.test_code }}</td>
-            <td>{{ row.test }}</td>
-            <td>{{ row.language }}</td>
-            <td>{{ row.order_num }}</td>
-            <td>{{ row.taker_name }}</td>
-            <td>{{ row.taker_email }}</td>
-            <td>{{ row.expiration_date }}</td>
-            <td>{{ row.used_on_date }}</td>
-            <td>{{ row.results }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row g-3 table-rows">
+        <!-- Date Range Filter -->
+        <div class="col-md-6"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="form-label">Expiring</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="date" class="form-control" v-model="filters.expirationStart" placeholder="Start Date">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Language Filter -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="language" class="form-label">Language</label>
+                <select id="language" class="form-select" v-model="filters.language">
+                    <option value="">All</option>
+                    <option v-for="lang in uniqueValues('language')" :key="lang">
+                        {{ lang }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+        <div class="table-filters mb-4 container">
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                <tr>
+                    <th v-for="col in columns" @click="sort(col)" class="text-center">
+                        {{ col.label }}
+                        <span v-if="sortKey === col.key"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="row in filteredData" :key="row.test_code">
+                        <td>{{ row.test_code }}</td>
+                        <td>{{ row.test }}</td>
+                        <td>{{ row.language }}</td>
+                        <td>{{ row.order_num }}</td>
+                        <td>{{ row.taker_name }}</td>
+                        <td>{{ row.taker_email }}</td>
+                        <td>{{ row.expiration_date }}</td>
+                        <td>{{ row.used_on_date }}</td>
+                        <td>{{ row.results }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

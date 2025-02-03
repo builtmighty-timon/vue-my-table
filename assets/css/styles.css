@@ -1,3 +1,11 @@
-#vue-table-app .table-filters > div {
-    height: 30px;
+#vue-table-app .table-filters > .form-group {
+    height: 2rem;
+}
+
+#vue-table-app select#language {
+    height: 3.2rem;
+}
+
+#vue-table-app label {
+    font-weight: bold;
 }
