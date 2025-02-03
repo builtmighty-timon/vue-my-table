@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const v = new Vue({
+    const tableSystem = new Vue({
         el: '#vue-table-app',
         data: {
             showSplash: true,
@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             sortKey: '',
             sortOrder: 'asc',
+            currentPage: 1,
+            itemsPerPage: 10
         },
         created: function() {
             // Step 1: Parse the "test" parameter from the URL
@@ -65,6 +67,33 @@ document.addEventListener('DOMContentLoaded', () => {
             sort(key) {
                 this.sortOrder = this.sortKey === key && this.sortOrder === 'asc' ? 'desc' : 'asc';
                 this.sortKey = key;
+            },
+            paginatedData(data) {
+                const startIndex = Math.max(0, this.currentPage - 1) * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                return data.slice(startIndex, endIndex); // Fetch only items for the current page
+            },
+            nextPage() {
+                if (
+                    this.currentPage <
+                    Math.ceil(this.data.length / this.itemsPerPage)
+                ) {
+                    this.currentPage = this.currentPage + 1;
+                }
+            },
+            prevPage() {
+                if (this.currentPage > 0) {
+                    this.currentPage = this.currentPage - 1;
+                }
+            },
+            goToPage(page) {
+                if (
+                    page >= 1 &&
+                    page <=
+                    Math.ceil(this.filteredData.length / this.itemsPerPage)
+                ) {
+                    this.currentPage = page;
+                }
             },
             filterData(data) {
                 return data
@@ -118,8 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         computed: {
             filteredData() {
-                return this.filterData(this.data);
+                const filtered = this.filterData(this.data);
+                return this.paginatedData(filtered);
             },
         },
     });
+
+
 });

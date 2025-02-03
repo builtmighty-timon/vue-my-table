@@ -43,3 +43,47 @@
     border-bottom-left-radius: 0;
     background: transparent;
 }
+
+#vue-table-app thead,
+#vue-table-app thead tr {
+        border: none;
+}
+
+#vue-table-app th {
+    color: darkslategrey;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+#vue-table-app .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#vue-table-app .pagination-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #0a4b78;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #0a4b78;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+}
+
+#vue-table-app .pagination-controls button.active {
+    font-weight: bold;
+    border: 2px solid #000;
+}
+
+#vue-table-app .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
