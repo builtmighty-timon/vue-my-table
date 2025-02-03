@@ -1,3 +1,18 @@
+#vue-table-app .search-field-row {
+    position: relative;
+}
+
+#vue-table-app .clear-search {
+    position: absolute;
+    right: 1rem;
+    top: 3.5rem;
+}
+
+#vue-table-app .clear-search a {
+    color: blue;
+    text-decoration: none;
+}
+
 #vue-table-app .table-filters > .form-group {
     height: 2rem;
 }
@@ -8,4 +23,15 @@
 
 #vue-table-app label {
     font-weight: bold;
+}
+
+#vue-table-app .input-group-append {
+    height: 100%;
+}
+
+#vue-table-app .input-group-append span {
+    height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: transparent;
 }

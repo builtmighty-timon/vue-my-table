@@ -1,6 +1,6 @@
 <?php ?>
 <div id="vue-table-app" class="container">
-    <div class="row g-3 table-filters">
+    <div class="row g-3 mb-3 table-filters">
         <!-- Search Filter -->
         <div class="col-md-6">
             <div class="form-group">
@@ -9,9 +9,17 @@
                         <label for="search" class="form-label" value="Search">&nbsp;</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
+                <div class="row search-field-row">
+                    <div class="col-12 input-group">
                         <input id="search" type="text" class="form-control" v-model="filters.search" placeholder="Search...">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.85-3.85a1.007 1.007 0 0 0-.115-.098zm-5.25-.34a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+                               </svg>
+                         &nbsp; Search</span>
+                        </div>
+                        <div class="clear-search"><a href="#">Clear Search</a></div>
                     </div>
                 </div>
             </div>
