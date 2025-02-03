@@ -69,7 +69,22 @@ document.addEventListener('DOMContentLoaded', () => {
             filterData(data) {
                 return data
                     .filter(row => {
-                        if (this.filters.testCode && row.test_code !== this.filters.testCode) return false;
+                        if (this.filters.testCode) {
+                            switch (this.filters.testCode) {
+                                case('unused'):
+                                    if ( row.used_on_date ) {
+                                        return false;
+                                    }
+                                    break;
+                                case('used'):
+                                    if ( !row.used_on_date ) {
+                                        return false;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                         if (this.filters.test && row.test !== this.filters.test) return false;
                         if (this.filters.language && row.language !== this.filters.language) return false;
 

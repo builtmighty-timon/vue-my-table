@@ -31,16 +31,15 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-12">
-                        <label for="test-code" class="form-label">Test Code</label>
+                        <label for="test-code" class="form-label">Test Codes</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <select id="test-code" class="form-select" v-model="filters.testCode">
                             <option value="">All</option>
-                            <option v-for="testCode in uniqueValues('test_code')" :key="testCode">
-                                {{ testCode }}
-                            </option>
+                            <option value="unused">Unused Codes Only</option>
+                            <option value="used">Used Codes Only</option>
                         </select>
                     </div>
                 </div>
@@ -52,7 +51,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-12">
-                        <label for="test" class="form-label">Test</label>
+                        <label for="test" class="form-label">Tests</label>
                     </div>
                 </div>
                 <div class="row">
@@ -81,7 +80,10 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <input type="date" class="form-control" v-model="filters.expirationStart" placeholder="Start Date">
+                        <select id="test" class="form-select" v-model="filters.expirationWithinDays">
+                            <option value="">All</option>
+                            <option value="60">60 Days</option>
+                        </select>
                     </div>
                 </div>
             </div>
