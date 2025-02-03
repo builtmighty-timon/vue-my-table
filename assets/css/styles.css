@@ -2,6 +2,10 @@
     position: relative;
 }
 
+#vue-table-app .btn {
+    background-color: #0d6efd;
+}
+
 #vue-table-app .clear-search {
     position: absolute;
     right: 1rem;

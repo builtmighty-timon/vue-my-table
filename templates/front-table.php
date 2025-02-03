@@ -1,5 +1,6 @@
 <?php ?>
 <div id="vue-table-app" class="container">
+    <a href="#" class="order-tests btn btn-primary">Order Tests</a>
     <div class="row g-3 mb-3 table-filters">
         <!-- Search Filter -->
         <div class="col-md-6">
