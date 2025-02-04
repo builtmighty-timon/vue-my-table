@@ -2,10 +2,8 @@
 
 class Simple_Table_Filter {
 
-    public array|null $_test_data;
-
-    public function get_test_data() {
-        $data = apply_filters('simple_table_filter_data', []);
+    public function get_test_data( int $org_id = null ) {
+        $data = apply_filters('simple_table_filter_data', [], $org_id );
         return $data;
     }
 
