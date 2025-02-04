@@ -33,7 +33,6 @@ class Simple_Table_Filter {
         wp_enqueue_style('vue-my-table', STF_URL . 'assets/css/styles.css', [], null, 'all');
     }
 
-
     public function render_table() {
         // Sample data from PHP array (replace with DB query results as needed).
         $raw_test_data = $this->get_test_data();
@@ -51,10 +50,6 @@ class Simple_Table_Filter {
 
             return $arr_item;
         }, $raw_test_data);
-
-//        echo '<pre>';
-//        print_r( $test_data );
-//        echo '</pre>';
 
         // Pass data to the template.
         ob_start();
