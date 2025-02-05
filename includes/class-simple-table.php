@@ -2,7 +2,10 @@
 
 class Simple_Table_Filter {
 
-    public function get_test_data( int $org_id = null ) {
+	// DELETE ME DELETE ME DELETE MEEEE!!!!
+	const TEST_ORG_ID = 1;
+
+    public function get_test_data( int $org_id ) {
         $data = apply_filters('simple_table_filter_data', [], $org_id );
         return $data;
     }
@@ -25,20 +28,25 @@ class Simple_Table_Filter {
 
         // Localize PHP data to JavaScript (optional if data needs to pass from PHP).
         wp_localize_script('simple-table-app', 'simpleTableData', array(
-            'tableData' => $this->get_test_data(), // Pass your table data from PHP as JSON.
+            'tableData' => $this->get_test_data( self::TEST_ORG_ID ), // Pass your table data from PHP as JSON.
         ));
 
         wp_enqueue_style('vue-my-table', STF_URL . 'assets/css/styles.css', [], null, 'all');
     }
 
-    public function render_table() {
+    public function render_table() : string {
         // Sample data from PHP array (replace with DB query results as needed).
-        $raw_test_data = $this->get_test_data();
+        $raw_test_data = $this->get_test_data( self::TEST_ORG_ID );
+
+        if ( !$raw_test_data ) {
+            return '';
+        }
+
         $test_data = array_map(function(object $item) {
 
             $arr_item = (array) $item;
 
-            $props = ['expiration_date'];
+            $props = ['expiration_date', 'redeemed_at'];
 
             foreach( $props as $property ) {
                 if ( isset($arr_item[$property]) ) {
