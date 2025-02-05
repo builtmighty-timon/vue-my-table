@@ -127,7 +127,7 @@
                         <td>{{ row.taker_email }}</td>
                         <td>{{ row.expiration_date }}</td>
                         <td>{{ row.used_on_date }}</td>
-                        <td>{{ row.results }}</td>
+                        <td>{{ row.results_url }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -148,7 +148,6 @@
                 </button>
                 <span>Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
             </div>
-
         </div>
     </div>
 </div>
