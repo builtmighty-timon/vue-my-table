@@ -87,10 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             goToPage(page) {
+                const truePage = page - 1;
                 if (
-                    page >= 1 &&
-                    page <=
-                    Math.ceil(this.filteredData.length / this.itemsPerPage)
+                    truePage >= 0 &&
+                    truePage <=
+                    ( 1 + Math.ceil(this.filteredData.length / this.itemsPerPage))
                 ) {
                     this.currentPage = page;
                 }
