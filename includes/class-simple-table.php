@@ -3,11 +3,34 @@
 class Simple_Table_Filter {
 
 	// DELETE ME DELETE ME DELETE MEEEE!!!!
-	const TEST_ORG_ID = 1;
+	const TEST_ORG_ID = 100;
 
-    public function get_test_data( int $org_id ) {
-        $data = apply_filters('simple_table_filter_data', [], $org_id );
-        return $data;
+    public function get_test_data( int $org_id ) : array|null {
+
+	    // Sample data from PHP array (replace with DB query results as needed).
+        $raw_test_data = apply_filters('simple_table_filter_data', [], $org_id );
+
+        if ( !$raw_test_data ) {
+            return null;
+        }
+
+        $data =  array_map(function(object $item) {
+
+            $arr_item = (array) $item;
+
+            $props = ['expires_at', 'redeemed_at'];
+
+            foreach( $props as $property ) {
+                if ( isset($arr_item[$property]) ) {
+                    $arr_item[$property] = $arr_item[$property]->format('m/d/Y');
+                }
+            }
+
+			return $arr_item;
+
+        }, $raw_test_data);
+
+		return $data;
     }
 
     public function init() {
@@ -35,31 +58,10 @@ class Simple_Table_Filter {
     }
 
     public function render_table() : string {
-        // Sample data from PHP array (replace with DB query results as needed).
-        $raw_test_data = $this->get_test_data( self::TEST_ORG_ID );
-
-        if ( !$raw_test_data ) {
-            return '';
-        }
-
-        $test_data = array_map(function(object $item) {
-
-            $arr_item = (array) $item;
-
-            $props = ['expiration_date', 'redeemed_at'];
-
-            foreach( $props as $property ) {
-                if ( isset($arr_item[$property]) ) {
-                    $arr_item[$property] = $arr_item[$property]->format('Y-m-d H:i:s');
-                }
-            }
-
-            return $arr_item;
-        }, $raw_test_data);
-
         // Pass data to the template.
         ob_start();
         require STF_PATH . 'templates/front-table.php';
         return ob_get_clean();
     }
+
 }

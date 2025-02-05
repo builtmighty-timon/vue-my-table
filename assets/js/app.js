@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 {key: 'order_num', label: 'Order #'},
                 {key: 'taker_name', label: 'Test Taker Name'},
                 {key: 'taker_email', label: 'Test Taker Email'},
-                {key: 'expiration_date', label: 'Expires On'},
-                {key: 'used_on_date', label: 'Used On'},
+                {key: 'expires_at', label: 'Expires On'},
+                {key: 'redeemed_at', label: 'Used On'},
                 {key: 'results', label: 'Results'},
             ],
             data: simpleTableData.tableData, // Comes from php localization
@@ -101,12 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (this.filters.testCode) {
                             switch (this.filters.testCode) {
                                 case('unused'):
-                                    if ( row.used_on_date ) {
+                                    if ( row.redeemed_at ) {
                                         return false;
                                     }
                                     break;
                                 case('used'):
-                                    if ( !row.used_on_date ) {
+                                    if ( !row.redeemed_at ) {
                                         return false;
                                     }
                                     break;
@@ -117,13 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (this.filters.test && row.test !== this.filters.test) return false;
                         if (this.filters.language && row.language !== this.filters.language) return false;
 
-                        const expiration = new Date(row.expiration_date);
+                        const expiration = new Date(row.expires_at);
                         const today = new Date();
                         if (this.filters.expirationWithinDays && expiration) {
-                            if ( expiration > new Date(new Date().setDate(new Date().getDate() + parseInt(this.filters.expirationWithinDays)))) {
+                            if ( new Date(expiration) > new Date(new Date().setDate(new Date().getDate() + parseInt(this.filters.expirationWithinDays)))) {
                                 return false;
                             }
-                            if ( expiration < today) {
+                            if ( new Date( expiration ) < today) {
                                 return false;
                             }
                         }

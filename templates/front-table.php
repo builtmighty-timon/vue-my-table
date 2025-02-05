@@ -125,9 +125,9 @@
                         <td>{{ row.order_num }}</td>
                         <td>{{ row.taker_name }}</td>
                         <td>{{ row.taker_email }}</td>
-                        <td>{{ row.expiration_date }}</td>
-                        <td>{{ row.used_on_date }}</td>
-                        <td>{{ row.results_url }}</td>
+                        <td>{{ row.expires_at }}</td>
+                        <td>{{ row.redeemed_at }}</td>
+                        <td><a :href="row.results_url" download>Results</a></td>
                     </tr>
                 </tbody>
             </table>
