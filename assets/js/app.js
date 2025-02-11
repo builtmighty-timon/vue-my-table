@@ -97,6 +97,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.currentPage = this.currentPage - 1;
                 }
             },
+            fetchResultsPdf( id ) {
+                if ( ! Number.isInteger(id )) {
+                    console.error('Invalid test ID');
+                    return;
+                }
+
+                // Fetch the results pdf
+                fetch('/wp-json/eira/v1/test-results?test_id=' + id, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    debugger;
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'test-results.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            },
             goToPage(page) {
                 const truePage = page - 1;
                 if (
@@ -297,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>{{ row.taker_email }}</td>
                         <td>{{ row.expires_at }}</td>
                         <td>{{ row.redeemed_at }}</td>
-                        <td><a :href="row.results_url" download>Results</a></td>
+                        <td><button class="btn" @click="fetchResultsPdf(row.id)">Download Results</button></td>
                     </tr>
                 </tbody>
             </table>
