@@ -60,12 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const searchInput = document.getElementById('search');
                 searchInput.value = '';
                 this.filters.search = '';
+                this.goToPage(1);
             },
             uniqueValues(key) {
                 return [...new Set(this.data.map(row => row[key]))];
             },
-            sort(key) {
+            sort(keyObject) {
+                const key = keyObject.key;
+                const date_keys = ['expires_at', 'redeemed_at'];
                 this.sortOrder = this.sortKey === key && this.sortOrder === 'asc' ? 'desc' : 'asc';
+                if ( date_keys.includes(key) ) {
+                    sortDates(this, key);
+                } else {
+                    sortStrings(this, key);
+                }
+
                 this.sortKey = key;
             },
             paginatedData(data) {
@@ -153,6 +162,24 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         },
     });
+
+    function sortDates(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = a.hasOwnProperty(key) ? new Date(a[key]) : 0;
+            const valB = b.hasOwnProperty(key) ? new Date(b[key]) : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
+
+    function sortStrings(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = (a.hasOwnProperty(key) && a[key]) ? a[key].toString().toLowerCase() : 0;
+            const valB = (b.hasOwnProperty(key) && b[key]) ? b[key].toString().toLowerCase() : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
 
 
 });
