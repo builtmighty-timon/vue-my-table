@@ -161,6 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return this.paginatedData(filtered);
             },
         },
+        watch: {
+            'filters.search': function filteredData( newVal, oldVal ) {
+                this.goToPage(1);
+            }
+        }
     });
 
     function sortDates(vue, key) {
