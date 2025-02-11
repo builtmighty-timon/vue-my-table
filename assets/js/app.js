@@ -71,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.sortOrder = this.sortKey === key && this.sortOrder === 'asc' ? 'desc' : 'asc';
                 if ( date_keys.includes(key) ) {
                     sortDates(this, key);
+                } else if ( key === 'order_num' ) {
+                    sortNumbers(this, key);
                 } else {
                     sortStrings(this, key);
                 }
@@ -334,6 +336,15 @@ document.addEventListener('DOMContentLoaded', () => {
         vue.data.sort((a, b) => {
             const valA = (a.hasOwnProperty(key) && a[key]) ? a[key].toString().toLowerCase() : 0;
             const valB = (b.hasOwnProperty(key) && b[key]) ? b[key].toString().toLowerCase() : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
+
+    function sortNumbers(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = a.hasOwnProperty(key) ? a[key] : 0;
+            const valB = b.hasOwnProperty(key) ? b[key] : 0;
             if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
             return valA < valB ? 1 : -1;
         });
