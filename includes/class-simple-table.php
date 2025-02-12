@@ -43,11 +43,9 @@ class Simple_Table_Filter {
 
     public function enqueue_scripts()
     {
-        // Enqueue Vue.js from a CDN (or local if preferred).
-        wp_enqueue_script('vue', 'https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js', [], null, true);
 
         // Enqueue your custom app.js script.
-        wp_enqueue_script('simple-table-app', STF_URL . 'assets/js/app.js', ['vue'], null, true);
+        wp_enqueue_script('simple-table-app', STF_URL . 'assets/js/app.js', null, true);
 
         // Localize PHP data to JavaScript (optional if data needs to pass from PHP).
         wp_localize_script('simple-table-app', 'simpleTableData', array(
