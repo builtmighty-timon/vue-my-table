@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             resetPage() {
-                debugger;
                 this.currentPage = 1;
             },
             prevPage() {
@@ -108,14 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadCSV() {
 
                 debugger;
-                // if (this.filterData(this.data) || this.filterData(this.data) === 0) {
-                //     return;
-                // }
+                if ( ! this.filterData(this.data) || this.filterData(this.data).length === 0) {
+                    return;
+                }
 
-                // //const data = this.filteredData();
+                const data = this.filterData( this.data );
         
                 const rows = [this.columns.map(col => col.label)]; // Add headers
-                this.data.forEach(row => {
+                data.forEach(row => {
                     rows.push(this.columns.map(col => row[col.key] || ''));
                 });
         
