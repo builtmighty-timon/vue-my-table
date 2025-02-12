@@ -43,7 +43,6 @@ class Simple_Table_Filter {
 
     public function enqueue_scripts()
     {
-
         // Enqueue your custom app.js script.
         wp_enqueue_script('simple-table-app', STF_URL . 'assets/js/app.js', null, true);
 

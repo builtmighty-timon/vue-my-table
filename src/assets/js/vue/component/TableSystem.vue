@@ -84,7 +84,7 @@
                     <div class="col-12">
                         <select id="test" class="form-select" v-model="filters.expirationWithinDays">
                             <option value="">All</option>
-                            <option value="60">60 Days</option>
+                            <option value="">60 Days</option>
                         </select>
                     </div>
                 </div>
