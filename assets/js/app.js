@@ -60,7 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const searchInput = document.getElementById('search');
                 searchInput.value = '';
                 this.filters.search = '';
-                this.goToPage(1);
+                this.filters.testCode = '';
+                this.filters.test = '';
+                this.filters.expirationWithinDays = '';
+                this.filters.language = '';
+                this.resetPage();
             },
             uniqueValues(key) {
                 return [...new Set(this.data.map(row => row[key]))];
@@ -92,15 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.currentPage = this.currentPage + 1;
                 }
             },
+            resetPage() {
+                debugger;
+                this.currentPage = 1;
+            },
             prevPage() {
                 if (this.currentPage > 0) {
                     this.currentPage = this.currentPage - 1;
                 }
             },
             downloadCSV() {
-                if (!this.data || this.data.length === 0) {
-                    return;
-                }
+
+                debugger;
+                // if (this.filterData(this.data) || this.filterData(this.data) === 0) {
+                //     return;
+                // }
+
+                // //const data = this.filteredData();
         
                 const rows = [this.columns.map(col => col.label)]; // Add headers
                 this.data.forEach(row => {
@@ -218,9 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         },
         watch: {
-            'filters.search': function filteredData( newVal, oldVal ) {
-                this.goToPage(1);
-            }
+            'filters.search': function(oldValue,newValue) { this.resetPage(); },
+            'filters.testCode': function () { this.resetPage(); }
+            // filters.expirationStart: '',
+            // filters.expirationWithinDays: '',
+            // filters.test: '',
+            // filters.language: '',
+            // filters.search: '',
+            // showSplash: true,
         },
         template: 
         `<div id="vue-table-app" class="container">
