@@ -49,3 +49,4 @@ wp-config.php
 
 # Auth Key File
 auth.key
+node_modules/*
