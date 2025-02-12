@@ -97,6 +97,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.currentPage = this.currentPage - 1;
                 }
             },
+            downloadCSV() {
+                if (!this.data || this.data.length === 0) {
+                    return;
+                }
+        
+                const rows = [this.columns.map(col => col.label)]; // Add headers
+                this.data.forEach(row => {
+                    rows.push(this.columns.map(col => row[col.key] || ''));
+                });
+        
+                const csvContent = rows.map(e => e.join(",")).join("\n");
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "table_data.csv");
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            },
             fetchResultsPdf( id ) {
                 if ( ! Number.isInteger(id )) {
                     console.error('Invalid test ID');
@@ -117,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return response.blob();
                 })
                 .then(blob => {
-                    debugger;
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.style.display = 'none';
@@ -352,6 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
                 <span>Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
             </div>
+            <button @click="downloadCSV" class="btn btn-secondary">Download CSV</button>
         </div>
     </div>
 </div>`,
