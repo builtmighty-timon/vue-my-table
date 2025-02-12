@@ -1,4 +1,7 @@
 <template>
+
+  <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
+
   <div class="table-app-container">
   <!-- <TableSystem :tableData="tableData"/> -->
   <TableSplash :tableData="tableData"/>
@@ -6,8 +9,8 @@
 </template>
   
   <script>
-  import TableSystem from './component/TableSystem.vue';
   import TableSplash from './component/TableSplash.vue';
+  import TableSystem from './component/TableSystem.vue';
 
   export default {
     name: 'App',
@@ -18,7 +21,7 @@
       }
     },
     components: {
-        TableSystem
+        TableSplash
     }
   };
   </script>
