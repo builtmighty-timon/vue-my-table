@@ -1,6 +1,8 @@
 <template>
-  <TableSystem :tableData="tableData"/>
-   <!-- <TableSplash :tableData="tableData"/> -->
+  <div class="table-app-container">
+  <!-- <TableSystem :tableData="tableData"/> -->
+  <TableSplash :tableData="tableData"/>
+  </div>
 </template>
   
   <script>
@@ -20,3 +22,10 @@
     }
   };
   </script>
+
+<style scoped>
+.table-app-container {
+  margin: 2rem;
+}
+
+</style>

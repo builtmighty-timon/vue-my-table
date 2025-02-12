@@ -38,7 +38,9 @@ class Simple_Table_Filter {
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 
         // Register shortcode for table display.
-        add_shortcode('simple_table_filter', [$this, 'render_table']);
+        add_shortcode('vue_my_table', [$this, 'render_table']);
+
+        add_action('woocommerce_account_dashboard', [ $this, 'add_vue_my_table_to_dashboard' ]);
     }
 
     public function enqueue_scripts()
@@ -61,4 +63,7 @@ class Simple_Table_Filter {
         return ob_get_clean();
     }
 
+    function add_vue_my_table_to_dashboard() {
+        echo do_shortcode('[vue_my_table]');
+    }
 }
