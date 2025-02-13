@@ -117,7 +117,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in filteredData" :key="row.test_code">
+            <tr v-for="row in paginateData" :key="row.test_code">
               <td>{{ row.test_code }}</td>
               <td>{{ row.test }}</td>
               <td>{{ row.language }}</td>
@@ -133,6 +133,9 @@
       </div>
 
       <div class="table-controls">
+        <div class="per-page-controls">
+          <TablePerPageControl :itemsPerPage="itemsPerPage" @update:itemsPerPage="itemsPerPage = $event" />
+        </div>
         <!-- Pagination Controls -->
         <div>
           <div class="pagination-controls">
@@ -161,6 +164,7 @@
   </template>
   
   <script>
+  import TablePerPageControl from './TablePerPageControl.vue';
   export default {
     name: 'TableSystem',
     props: {
@@ -176,6 +180,9 @@
         type: Boolean,
         required: true
       }
+    },
+    components: {
+      TablePerPageControl
     },
     data() {
       return {
@@ -208,8 +215,17 @@
       showSplash: {
         handler(newShowSplash) {
           this.$emit('update:showSplash', newShowSplash);
+          this.$emit('update:tableData', this.tableData);
+        }
+      },
+      itemsPerPage: {
+        handler(newItemsPerPage) {
+          this.itemsPerPage = newItemsPerPage;
+          this.$emit('update:itemsPerPage', newItemsPerPage);
+          this.resetPage();
         }
       }
+
     },
     methods: {
       clearSearch() {
@@ -405,8 +421,11 @@
     computed: {
       filteredData() {
         const filtered = this.filterData(this.data);
-        return this.paginatedData(filtered);
+        return filtered;
       },
+      paginateData() {
+        return this.paginatedData(this.filteredData);
+      }
     }
   };
   </script>
