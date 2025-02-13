@@ -15,20 +15,8 @@
         </div>
       </div>
       <div class="summary-body">
-        <div>
-          <a @click="filter_by_test_type('RHETI')">
-            <div class="link-title">RHETI</div>
-            <div class="available-codes">Available Codes: 49</div>
-            <div class="expiring-info">Expiring within 60 days: 0</div>
-          </a>
-        </div>
-        <div>
-          <a @click="filter_by_test_type('IVQ')">
-            <div class="link-title">IVQ</div>
-            <div class="available-codes">Available Codes: 25</div>
-            <div class="expiring-info">Expiring within 60 days: 0</div>
-          </a>
-        </div>
+        <TestTypeSummary :testType="'RHETI'" :tableData="tableData" @testSelected="selection => filterByTestType(selection)"/>
+        <TestTypeSummary :testType="'IVQ'" :tableData="tableData" @testSelected="selection => filterByTestType(selection)"/>
       </div>
     </div>
 
@@ -39,8 +27,14 @@
 </template>
 
 <script>
+import { VueElement } from 'vue';
+import TestTypeSummary from './TestTypeSummary.vue';
+
 export default {
   name: 'TableSplash',
+  components: {
+    TestTypeSummary
+  },
   props: {
     tableData: {
       type: Array,
@@ -56,9 +50,10 @@ export default {
     }
   },
   methods: {
-    filter_by_test_type(testType) {
-      this.filters.testType = testType;
-      this.$emit('update:filters', this.filters);
+    filterByTestType(testType) {
+      const filters = { ...this.filters}
+      filters.testType = testType;
+      this.$emit('update:filters', filters );
     },
     setSplashState(showSplash) {
       this.$emit('update:showSplash', showSplash);
