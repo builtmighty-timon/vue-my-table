@@ -1,10 +1,7 @@
 <template>
   <div class="table-splash-vue flex-column">
-
     <div class="dotted-border flex-column update-tax-exempt-button-container">
-      <div>
-        For United States and Canada
-      </div>
+      <div>For United States and Canada</div>
       <div>
         <a href="javascript:void(0)" class="btn btn-primary">Update Tax Exempt Status</a>
       </div>
@@ -12,23 +9,21 @@
 
     <div class="solid-border tests-summary">
       <div class="summary-heading">
+        <div>Tests Summary</div>
         <div>
-          Tests Summary
-        </div>
-        <div>
-          <a @click="">View Test Details</a>
+          <a @click="setSplashState(false)">View Test Details</a>
         </div>
       </div>
       <div class="summary-body">
         <div>
-          <a @click="">
+          <a @click="filter_by_test_type('RHETI')">
             <div class="link-title">RHETI</div>
             <div class="available-codes">Available Codes: 49</div>
             <div class="expiring-info">Expiring within 60 days: 0</div>
           </a>
         </div>
         <div>
-          <a @click="">
+          <a @click="filter_by_test_type('IVQ')">
             <div class="link-title">IVQ</div>
             <div class="available-codes">Available Codes: 25</div>
             <div class="expiring-info">Expiring within 60 days: 0</div>
@@ -41,8 +36,8 @@
       <a @click="">FAQs</a>
     </div>
   </div>
-  
 </template>
+
 <script>
 export default {
   name: 'TableSplash',
@@ -50,13 +45,52 @@ export default {
     tableData: {
       type: Array,
       required: true
+    },
+    filters: {
+      type: Object,
+      required: true
+    },
+    showSplash: {
+      type: Boolean,
+      required: true
+    }
+  },
+  methods: {
+    filter_by_test_type(testType) {
+      this.filters.testType = testType;
+      this.$emit('update:filters', this.filters);
+    },
+    setSplashState(showSplash) {
+      this.$emit('update:showSplash', showSplash);
+    }
+  },
+  watch: {
+    filters: {
+      handler(newFilters) {
+        this.$emit('update:filters', newFilters);
+
+        // Don't show the splash if the filter is reset.
+        if (this.showSplash) return;
+
+        // Take away the splash once a filter has been set.
+        if (newFilters.testCode || newFilters.expirationStart || newFilters.expirationWithinDays || newFilters.test || newFilters.language || newFilters.search) {
+          this.$emit('update:showSplash', false);
+        } else {
+          this.$emit('update:showSplash', true);
+        }
+      },
+      deep: true
+    },
+    showSplash: {
+      handler(newShowSplash) {
+        this.$emit('update:showSplash', newShowSplash);
+      }
     }
   }
 };
-
 </script>
-<style>
 
+<style>
 .table-splash-vue.flex-column,
 .table-splash-vue .flex-column {
   display: flex;
@@ -66,12 +100,11 @@ export default {
   align-items: center;
 }
 
-.table-splash-vue .dotted-border{
+.table-splash-vue .dotted-border {
   border: 2px dashed #c3a253;
-
 }
 
-.table-splash-vue .solid-border{
+.table-splash-vue .solid-border {
   border: 2px solid #c3a253;
 }
 
@@ -110,6 +143,7 @@ export default {
   gap: 1rem;
   justify-content: space-around;
 }
+
 @media screen and (min-width: 768px) {
   .table-splash-vue .summary-body {
     flex-direction: row;
@@ -121,6 +155,7 @@ export default {
   padding: 1rem;
   width: 100%;
 }
+
 @media screen and (min-width: 768px) {
   .table-splash-vue .summary-body > div {
     width: 50%;
@@ -133,7 +168,7 @@ export default {
 }
 
 .table-splash-vue .link-title {
-  font-size:1.4rem;
+  font-size: 1.4rem;
   font-weight: 300;
   border-bottom: 1px solid lightgray;
 }
@@ -148,4 +183,8 @@ export default {
   font-size: 0.7rem;
 }
 
+.table-splash-vue .tests-summary a {
+  color: blue;
+  cursor: pointer;
+}
 </style>

@@ -162,12 +162,6 @@
         data() {
             return {
             showSplash: true,
-            props: {
-                tableData: {
-                type: Array,
-                required: true
-                }
-            },
             columns: [
                 {key: 'test_code', label: 'Test Code'},
                 {key: 'test', label: 'Test'},
@@ -180,47 +174,40 @@
                 {key: 'results', label: 'Results'},
             ],
             data: simpleTableData.tableData, // Comes from php localization
-            filters: {
-                testCode: '',
-                expirationStart: '',
-                expirationWithinDays: '',
-                test: '',
-                language: '',
-                search: '',
-                showSplash: true,
-            },
             sortKey: '',
             sortOrder: 'asc',
             currentPage: 1,
             itemsPerPage: 10
             }
         },
-        created: function() {
-            // Step 1: Parse the "test" parameter from the URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const testFilter = urlParams.get('test');
-            const expiryWithinFilter = urlParams.get('expiration_within_days');
-
-            // Step 2: Set the value in the `filters.test` model
-            if (testFilter) {
-                this.filters.test = testFilter;
-                this.showSplash = false;
+        props: {
+            tableData: {
+                type: Array,
+                required: true
+            },
+            filters : {
+                type: Object,
+                required: true
+            },
+            showSplash : {
+                type: Boolean,
+                required: true
             }
-
-            if (expiryWithinFilter) {
-                this.filters.expirationWithinDays = expiryWithinFilter;
-                this.showSplash = false;
+        },
+        watch: {
+            filters: {
+                handler(newFilters) {
+                    this.$emit('update:filters', newFilters);
+                },
+                deep: true
+            },
+            showSplash: {
+                handler(newShowSplash) {
+                    this.$emit('update:showSplash', newShowSplash);
+                }
             }
         },
         methods: {
-            toggleSplash( on = null  ) {
-                if ( on === null ) {
-                    this.showSplash = !this.showSplash;
-                }
-                else {
-                    this.showSplash = on;
-                }
-            },
             clearSearch() {
                 const searchInput = document.getElementById('search');
                 searchInput.value = '';
@@ -391,15 +378,6 @@
                 const filtered = this.filterData(this.data);
                 return this.paginatedData(filtered);
             },
-        },
-        watch: {
-            // 'filters.search': function(oldValue,newValue) { this.resetPage(); },
-            // 'filters.testCode': function () { this.resetPage(); }
-            // 'filters.expirationWithinDays': function() { this.resetPage(); };
-            // 'filters.test:' : function() { this.resetPage(); };
-            // filters.language: '',;
-            // filters.search: '',
-            // showSplash: true,
         }
     };
 </script>

@@ -3,8 +3,8 @@
   <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
 
   <div class="table-app-container">
-  <!-- <TableSystem :tableData="tableData"/> -->
-  <TableSplash :tableData="tableData"/>
+    <TableSplash v-if="showSplash" :tableData="tableData" v-model:filters="filters" v-model:showSplash="showSplash"/>
+    <TableSystem v-if="!showSplash" :tableData="tableData" v-model:filters="filters" v-model:showSplash="showSplash"/>
   </div>
 </template>
   
@@ -21,9 +21,32 @@
       }
     },
     components: {
-        TableSplash
+        TableSplash,
+        TableSystem
+    },
+    watch: {
+      filters: {
+        handler(newFilters) {
+          this.showSplash = false;
+        },
+        deep: true
+      }
+    },
+    data: () => {
+      return {
+        filters: {
+            testCode: '',
+            expirationStart: '',
+            expirationWithinDays: '',
+            test: '',
+            language: '',
+            search: '',
+            showSplash: true,
+          },
+          showSplash: true,
+        }
+      }
     }
-  };
   </script>
 
 <style scoped>
@@ -32,3 +55,4 @@
 }
 
 </style>
+

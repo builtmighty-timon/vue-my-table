@@ -19952,7 +19952,30 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    TableSplash: _component_TableSplash_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    TableSplash: _component_TableSplash_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TableSystem: _component_TableSystem_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  watch: {
+    filters: {
+      handler: function handler(newFilters) {
+        this.showSplash = false;
+      },
+      deep: true
+    }
+  },
+  data: function data() {
+    return {
+      filters: {
+        testCode: '',
+        expirationStart: '',
+        expirationWithinDays: '',
+        test: '',
+        language: '',
+        search: '',
+        showSplash: true
+      },
+      showSplash: true
+    };
   }
 });
 
@@ -19974,6 +19997,46 @@ __webpack_require__.r(__webpack_exports__);
     tableData: {
       type: Array,
       required: true
+    },
+    filters: {
+      type: Object,
+      required: true
+    },
+    showSplash: {
+      type: Boolean,
+      required: true
+    }
+  },
+  methods: {
+    filter_by_test_type: function filter_by_test_type(testType) {
+      this.filters.testType = testType;
+      this.$emit('update:filters', this.filters);
+    },
+    setSplashState: function setSplashState(showSplash) {
+      this.$emit('update:showSplash', showSplash);
+    }
+  },
+  watch: {
+    filters: {
+      handler: function handler(newFilters) {
+        this.$emit('update:filters', newFilters);
+
+        // Don't show the splash if the filter is reset.
+        if (this.showSplash) return;
+
+        // Take away the splash once a filter has been set.
+        if (newFilters.testCode || newFilters.expirationStart || newFilters.expirationWithinDays || newFilters.test || newFilters.language || newFilters.search) {
+          this.$emit('update:showSplash', false);
+        } else {
+          this.$emit('update:showSplash', true);
+        }
+      },
+      deep: true
+    },
+    showSplash: {
+      handler: function handler(newShowSplash) {
+        this.$emit('update:showSplash', newShowSplash);
+      }
     }
   }
 });
@@ -20001,12 +20064,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   data: function data() {
     return {
       showSplash: true,
-      props: {
-        tableData: {
-          type: Array,
-          required: true
-        }
-      },
       columns: [{
         key: 'test_code',
         label: 'Test Code'
@@ -20037,46 +20094,40 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }],
       data: simpleTableData.tableData,
       // Comes from php localization
-      filters: {
-        testCode: '',
-        expirationStart: '',
-        expirationWithinDays: '',
-        test: '',
-        language: '',
-        search: '',
-        showSplash: true
-      },
       sortKey: '',
       sortOrder: 'asc',
       currentPage: 1,
       itemsPerPage: 10
     };
   },
-  created: function created() {
-    // Step 1: Parse the "test" parameter from the URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var testFilter = urlParams.get('test');
-    var expiryWithinFilter = urlParams.get('expiration_within_days');
-
-    // Step 2: Set the value in the `filters.test` model
-    if (testFilter) {
-      this.filters.test = testFilter;
-      this.showSplash = false;
+  props: {
+    tableData: {
+      type: Array,
+      required: true
+    },
+    filters: {
+      type: Object,
+      required: true
+    },
+    showSplash: {
+      type: Boolean,
+      required: true
     }
-    if (expiryWithinFilter) {
-      this.filters.expirationWithinDays = expiryWithinFilter;
-      this.showSplash = false;
+  },
+  watch: {
+    filters: {
+      handler: function handler(newFilters) {
+        this.$emit('update:filters', newFilters);
+      },
+      deep: true
+    },
+    showSplash: {
+      handler: function handler(newShowSplash) {
+        this.$emit('update:showSplash', newShowSplash);
+      }
     }
   },
   methods: {
-    toggleSplash: function toggleSplash() {
-      var on = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      if (on === null) {
-        this.showSplash = !this.showSplash;
-      } else {
-        this.showSplash = on;
-      }
-    },
     clearSearch: function clearSearch() {
       var searchInput = document.getElementById('search');
       searchInput.value = '';
@@ -20239,15 +20290,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       var filtered = this.filterData(this.data);
       return this.paginatedData(filtered);
     }
-  },
-  watch: {
-    // 'filters.search': function(oldValue,newValue) { this.resetPage(); },
-    // 'filters.testCode': function () { this.resetPage(); }
-    // 'filters.expirationWithinDays': function() { this.resetPage(); };
-    // 'filters.test:' : function() { this.resetPage(); };
-    // filters.language: '',;
-    // filters.search: '',
-    // showSplash: true,
   }
 });
 
@@ -20270,12 +20312,33 @@ var _hoisted_1 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TableSplash = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableSplash");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  var _component_TableSystem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableSystem");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "/special-shop-page",
     "class": "order-tests btn btn-primary"
-  }, "Order Tests", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableSystem :tableData=\"tableData\"/> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableSplash, {
-    tableData: $props.tableData
-  }, null, 8 /* PROPS */, ["tableData"])])], 64 /* STABLE_FRAGMENT */);
+  }, "Order Tests", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_ctx.showSplash ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_TableSplash, {
+    key: 0,
+    tableData: $props.tableData,
+    filters: _ctx.filters,
+    "onUpdate:filters": _cache[0] || (_cache[0] = function ($event) {
+      return _ctx.filters = $event;
+    }),
+    showSplash: _ctx.showSplash,
+    "onUpdate:showSplash": _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.showSplash = $event;
+    })
+  }, null, 8 /* PROPS */, ["tableData", "filters", "showSplash"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.showSplash ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_TableSystem, {
+    key: 1,
+    tableData: $props.tableData,
+    filters: _ctx.filters,
+    "onUpdate:filters": _cache[2] || (_cache[2] = function ($event) {
+      return _ctx.filters = $event;
+    }),
+    showSplash: _ctx.showSplash,
+    "onUpdate:showSplash": _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.showSplash = $event;
+    })
+  }, null, 8 /* PROPS */, ["tableData", "filters", "showSplash"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -20310,13 +20373,17 @@ var _hoisted_5 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "dotted-border flex-column update-tax-exempt-button-container"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " For United States and Canada "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "For United States and Canada"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "javascript:void(0)",
     "class": "btn btn-primary"
-  }, "Update Tax Exempt Status")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Tests Summary ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    onClick: _cache[0] || (_cache[0] = function () {})
+  }, "Update Tax Exempt Status")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Tests Summary", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $options.setSplashState(false);
+    })
   }, "View Test Details")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    onClick: _cache[1] || (_cache[1] = function () {})
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.filter_by_test_type('RHETI');
+    })
   }, _cache[5] || (_cache[5] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "link-title"
   }, "RHETI", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -20324,7 +20391,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "Available Codes: 49", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "expiring-info"
   }, "Expiring within 60 days: 0", -1 /* HOISTED */)]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    onClick: _cache[2] || (_cache[2] = function () {})
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.filter_by_test_type('IVQ');
+    })
   }, _cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "link-title"
   }, "IVQ", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -20454,10 +20523,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $data.filters.search = $event;
+      return $props.filters.search = $event;
     }),
     placeholder: "Search..."
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.filters.search]]), _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.filters.search]]), _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "input-group-append"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "input-group-text"
@@ -20486,7 +20555,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "test-code",
     "class": "form-select",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.filters.testCode = $event;
+      return $props.filters.testCode = $event;
     })
   }, _cache[11] || (_cache[11] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
@@ -20494,7 +20563,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: "unused"
   }, "Unused Codes Only", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "used"
-  }, "Used Codes Only", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filters.testCode]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Test Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_cache[14] || (_cache[14] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, "Used Codes Only", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.testCode]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Test Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_cache[14] || (_cache[14] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "row"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-12"
@@ -20505,7 +20574,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "test",
     "class": "form-select",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.filters.test = $event;
+      return $props.filters.test = $event;
     })
   }, [_cache[13] || (_cache[13] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
@@ -20513,7 +20582,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: testVal
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(testVal), 1 /* TEXT */);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filters.test]])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Date Range Filter "), _cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.test]])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Date Range Filter "), _cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-md-6"
   }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_cache[16] || (_cache[16] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "row"
@@ -20525,20 +20594,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "test",
     "class": "form-select",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $data.filters.expirationWithinDays = $event;
+      return $props.filters.expirationWithinDays = $event;
     })
   }, _cache[15] || (_cache[15] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
   }, "All", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
-  }, "60 Days", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[18] || (_cache[18] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, "60 Days", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[18] || (_cache[18] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "language",
     "class": "form-label"
   }, "Language", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "language",
     "class": "form-select",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $data.filters.language = $event;
+      return $props.filters.language = $event;
     })
   }, [_cache[17] || (_cache[17] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
@@ -20546,7 +20615,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: lang
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(lang), 1 /* TEXT */);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filters.language]])])]), _cache[20] || (_cache[20] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.language]])])]), _cache[20] || (_cache[20] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "row"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "table-filters mb-4 container"
@@ -20608,7 +20677,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_vue_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    tableData: window.tableData
+    tableData: window.simpleTableData.tableData
   });
   app.mount('#vue-table-app');
 });
@@ -20654,7 +20723,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.table-splash-vue.flex-column,\n.table-splash-vue .flex-column {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: center;\n  align-items: center;\n}\n.table-splash-vue .dotted-border{\n  border: 2px dashed #c3a253;\n}\n.table-splash-vue .solid-border{\n  border: 2px solid #c3a253;\n}\n.table-splash-vue .update-tax-exempt-button-container {\n  padding: 1rem;\n  max-width: 400px;\n}\n.table-splash-vue .tests-summary {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n.table-splash-vue .summary-heading {\n  margin: 0;\n  padding: 1rem 1.5rem;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: salmon;\n  font-size: 1.3rem;\n  border-bottom: 2px solid #c3a253;\n  gap: 1rem;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-heading {\n    flex-direction: row;\n}\n}\n.table-splash-vue .summary-body {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: space-around;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body {\n    flex-direction: row;\n    gap: 0.5rem;\n}\n}\n.table-splash-vue .summary-body > div {\n  padding: 1rem;\n  width: 100%;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body > div {\n    width: 50%;\n    margin: 1rem 0;\n}\n.table-splash-vue .summary-body > div:first-child {\n    border-right: 2px solid #c3a253;\n}\n}\n.table-splash-vue .link-title {\n  font-size:1.4rem;\n  font-weight: 300;\n  border-bottom: 1px solid lightgray;\n}\n.table-splash-vue .available-codes {\n  margin-top: 1rem;\n  font-size: 1.2rem;\n}\n.table-splash-vue .expiring-info {\n  margin-top: 1.5rem;\n  font-size: 0.7rem;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.table-splash-vue.flex-column,\n.table-splash-vue .flex-column {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: center;\n  align-items: center;\n}\n.table-splash-vue .dotted-border {\n  border: 2px dashed #c3a253;\n}\n.table-splash-vue .solid-border {\n  border: 2px solid #c3a253;\n}\n.table-splash-vue .update-tax-exempt-button-container {\n  padding: 1rem;\n  max-width: 400px;\n}\n.table-splash-vue .tests-summary {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n.table-splash-vue .summary-heading {\n  margin: 0;\n  padding: 1rem 1.5rem;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: salmon;\n  font-size: 1.3rem;\n  border-bottom: 2px solid #c3a253;\n  gap: 1rem;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-heading {\n    flex-direction: row;\n}\n}\n.table-splash-vue .summary-body {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: space-around;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body {\n    flex-direction: row;\n    gap: 0.5rem;\n}\n}\n.table-splash-vue .summary-body > div {\n  padding: 1rem;\n  width: 100%;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body > div {\n    width: 50%;\n    margin: 1rem 0;\n}\n.table-splash-vue .summary-body > div:first-child {\n    border-right: 2px solid #c3a253;\n}\n}\n.table-splash-vue .link-title {\n  font-size: 1.4rem;\n  font-weight: 300;\n  border-bottom: 1px solid lightgray;\n}\n.table-splash-vue .available-codes {\n  margin-top: 1rem;\n  font-size: 1.2rem;\n}\n.table-splash-vue .expiring-info {\n  margin-top: 1.5rem;\n  font-size: 0.7rem;\n}\n.table-splash-vue .tests-summary a {\n  color: blue;\n  cursor: pointer;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
