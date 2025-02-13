@@ -15,8 +15,8 @@
         </div>
       </div>
       <div class="summary-body">
-        <TestTypeSummary :testType="'RHETI'" :tableData="tableData" @testSelected="selection => filterByTestType(selection)"/>
-        <TestTypeSummary :testType="'IVQ'" :tableData="tableData" @testSelected="selection => filterByTestType(selection)"/>
+        <TestTypeSummary :testType="'RHETI'" :tableData="tableData" @testSelected="filterByTestType"/>
+        <TestTypeSummary :testType="'IVQ'" :tableData="tableData" @testSelected="filterByTestType"/>
       </div>
     </div>
 
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { VueElement } from 'vue';
 import TestTypeSummary from './TestTypeSummary.vue';
 
 export default {
@@ -51,9 +50,8 @@ export default {
   },
   methods: {
     filterByTestType(testType) {
-      const filters = { ...this.filters}
-      filters.testType = testType;
-      this.$emit('update:filters', filters );
+      const updatedFilters = { ...this.filters, test: testType };
+      this.$emit('update:filters', updatedFilters);
     },
     setSplashState(showSplash) {
       this.$emit('update:showSplash', showSplash);
