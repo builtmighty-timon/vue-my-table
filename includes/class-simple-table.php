@@ -2,16 +2,23 @@
 
 class Simple_Table_Filter {
 
-	// DELETE ME DELETE ME DELETE MEEEE!!!!
-	const TEST_ORG_ID = 100;
+    private $_org_id = null;
 
-    public function get_test_data( int $org_id ) : array|null {
+    public function get_test_data() : array {
+
+        $org_id = intval( isset($_GET['org_id'])) ? $_GET['org_id'] : null;
+
+        if ( ! $org_id ) { 
+            return [];
+        }
+
+        $this->_org_id = $org_id;
 
 	    // Sample data from PHP array (replace with DB query results as needed).
         $raw_test_data = apply_filters('simple_table_filter_data', [], $org_id );
 
         if ( !$raw_test_data ) {
-            return null;
+            return [];
         }
 
         $data =  array_map(function(object $item) {
@@ -50,7 +57,7 @@ class Simple_Table_Filter {
 
         // Localize PHP data to JavaScript (optional if data needs to pass from PHP).
         wp_localize_script('simple-table-app', 'simpleTableData', array(
-            'tableData' => $this->get_test_data( self::TEST_ORG_ID ), // Pass your table data from PHP as JSON.
+            'tableData' => $this->get_test_data(), // Pass your table data from PHP as JSON.
         ));
 
         wp_enqueue_style('vue-my-table', STF_URL . 'assets/css/styles.css', [], null, 'all');
