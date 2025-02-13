@@ -1,5 +1,11 @@
 <template>
+
   <div class="table-splash-vue flex-column">
+
+    <div>
+      <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
+    </div>
+
     <div class="dotted-border flex-column update-tax-exempt-button-container">
       <div>For United States and Canada</div>
       <div>

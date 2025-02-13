@@ -1,5 +1,4 @@
 <template>
-  <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
 
   <div class="table-app-container">
     <TableSplash v-if="showSplash" :tableData="tableData" v-model:filters="filters" v-model:showSplash="showSplash"/>
