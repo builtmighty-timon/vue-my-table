@@ -130,23 +130,31 @@
             </tr>
           </tbody>
         </table>
-        <div class="pagination-controls">
-          <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-          <button
-            v-for="page in Math.ceil(filterData(data).length / itemsPerPage)"
-            :class="{ active: page === currentPage }"
-            @click="goToPage(page)"
-          >
-            {{ page }}
-          </button>
-          <button
-            @click="nextPage"
-            :disabled="currentPage === Math.ceil(filterData(data).length / itemsPerPage)"
-          >
-            Next
-          </button>
-          <span>Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
+      </div>
+
+      <div class="table-controls">
+        <!-- Pagination Controls -->
+        <div>
+          <div class="pagination-controls">
+            <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+            <button
+              v-for="page in Math.ceil(filterData(data).length / itemsPerPage)"
+              :class="{ active: page === currentPage }"
+              @click="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+            <button
+              @click="nextPage"
+              :disabled="currentPage === Math.ceil(filterData(data).length / itemsPerPage)"
+            >
+              Next
+            </button>
+            <span>Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
+          </div>
         </div>
+
+        <!-- Download CSV Button -->
         <button @click="downloadCSV" class="btn btn-secondary">Download CSV</button>
       </div>
     </div>
@@ -402,3 +410,16 @@
     }
   };
   </script>
+<style>
+#table-system-vue {
+  margin: 2rem;
+}
+
+#table-system-vue .table-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+</style>
