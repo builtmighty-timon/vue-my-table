@@ -3,7 +3,9 @@
         <a @click="emitTestTypeSelection(testType)">
             <div class="link-title">{{ testType }}</div>
             <div class="available-codes">Available Codes: {{ countForTestType }}</div>
-            <div class="expiring-info">Expiring within 60 days: {{ getExpiryWithinDays(60) }}</div>
+        </a>
+        <a @click="emitTestTypeSelectionWithExpiry(testType, 60)">
+            <div class="expiring-info">Expiring within 60 days: {{ getExpiryWithinDays(testType, 60) }}</div>
         </a>
     </div>
 </template>
@@ -24,6 +26,9 @@ export default {
     methods: {
         emitTestTypeSelection(testType) {
             this.$emit('testSelected', testType);
+        },
+        emitTestTypeSelectionWithExpiry( testType, expiry ) {
+            this.$emit('testSelectedWithExpiry', { testType: testType, days: expiry });
         },
         getExpiryWithinDays(days = null) {
             let count = 0;
