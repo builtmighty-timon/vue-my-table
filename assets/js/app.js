@@ -20199,7 +20199,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       this.filters.search = '';
       this.filters.testCode = '';
       this.filters.test = '';
-      this.filters.expirationWithinDays = '';
+      this.filters.expirationWithinDays = '0';
       this.filters.language = '';
       this.resetPage();
     },
@@ -20347,15 +20347,28 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         if (_this2.filters.language && row.language !== _this2.filters.language) return false;
         var expiration = new Date(row.expires_at);
         var today = new Date();
-        if (_this2.filters.expirationWithinDays && expiration) {
+        if (_this2.filters.expirationWithinDays === "") {
+          // Do Nothing.
+        } else if (_this2.filters.expirationWithinDays && _this2.filters.expirationWithinDays > 0 && expiration) {
+          debugger;
           if (new Date(expiration) > new Date(new Date().setDate(new Date().getDate() + parseInt(_this2.filters.expirationWithinDays)))) {
             return false;
           }
           if (new Date(expiration) < today) {
             return false;
           }
+        } else if (_this2.filters.expirationWithinDays == 0) {
+          debugger;
+          if (!expiration || expiration < today) {
+            return false;
+          }
+        } else if (_this2.filters.expirationWithinDays == -1) {
+          debugger;
+          if (expiration >= today) {
+            return false;
+          }
         }
-        if (_this2.filters.expirationStart && expiration < new Date(_this2.filters.expirationStart)) return false;
+        if (_this2.filters.expriationStart && _this2.filters.expirationStart !== "0" && expiration < new Date(_this2.filters.expirationStart)) return false;
         if (_this2.filters.search) {
           var searchVal = Object.values(row).join(' ').toLowerCase();
           if (!searchVal.includes(_this2.filters.search.toLowerCase())) return false;
@@ -20380,6 +20393,30 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     }
   }
 });
+function sortDates(vue, key) {
+  vue.data.sort(function (a, b) {
+    var valA = a.hasOwnProperty(key) ? new Date(a[key]) : 0;
+    var valB = b.hasOwnProperty(key) ? new Date(b[key]) : 0;
+    if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+    return valA < valB ? 1 : -1;
+  });
+}
+function sortStrings(vue, key) {
+  vue.data.sort(function (a, b) {
+    var valA = a.hasOwnProperty(key) && a[key] ? a[key].toString().toLowerCase() : 0;
+    var valB = b.hasOwnProperty(key) && b[key] ? b[key].toString().toLowerCase() : 0;
+    if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+    return valA < valB ? 1 : -1;
+  });
+}
+function sortNumbers(vue, key) {
+  vue.data.sort(function (a, b) {
+    var valA = a.hasOwnProperty(key) ? a[key] : 0;
+    var valB = b.hasOwnProperty(key) ? b[key] : 0;
+    if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+    return valA < valB ? 1 : -1;
+  });
+}
 
 /***/ }),
 
@@ -20768,7 +20805,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "col-12"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "form-label"
-  }, "Expiring")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, "Expiration")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "test",
     "class": "form-select",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
@@ -20777,8 +20814,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, _cache[16] || (_cache[16] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: ""
   }, "All", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "60"
-  }, "60 Days", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    value: "0"
+  }, "Not Expired", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "-1"
+  }, "Expired", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "language",
     "class": "form-label"
   }, "Language", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {

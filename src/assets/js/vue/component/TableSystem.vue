@@ -77,14 +77,15 @@
           <div class="form-group">
             <div class="row">
               <div class="col-12">
-                <label class="form-label">Expiring</label>
+                <label class="form-label">Expiration</label>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
                 <select id="test" class="form-select" v-model="filters.expirationWithinDays">
                   <option value="">All</option>
-                  <option value="60">60 Days</option>
+                  <option value="0">Not Expired</option>
+                  <option value="-1">Expired</option>
                 </select>
               </div>
             </div>
@@ -234,7 +235,7 @@
         this.filters.search = '';
         this.filters.testCode = '';
         this.filters.test = '';
-        this.filters.expirationWithinDays = '';
+        this.filters.expirationWithinDays = '0';
         this.filters.language = '';
         this.resetPage();
       },
@@ -392,7 +393,11 @@
   
             const expiration = new Date(row.expires_at);
             const today = new Date();
-            if (this.filters.expirationWithinDays && expiration) {
+            if ( this.filters.expirationWithinDays === "" ) {
+              // Do Nothing.
+            }
+            else if (this.filters.expirationWithinDays && this.filters.expirationWithinDays > 0 && expiration) {
+              debugger;
               if (new Date(expiration) > new Date(new Date().setDate(new Date().getDate() + parseInt(this.filters.expirationWithinDays)))) {
                 return false;
               }
@@ -400,8 +405,20 @@
                 return false;
               }
             }
+            else if (this.filters.expirationWithinDays == 0 ) {
+              debugger;
+              if (! expiration || expiration < today) {
+                return false;
+              }
+            }
+            else if(this.filters.expirationWithinDays == -1 ) {
+              debugger;
+              if (expiration >= today) {
+                return false;
+              }
+            }
   
-            if (this.filters.expirationStart && expiration < new Date(this.filters.expirationStart)) return false;
+            if (this.filters.expriationStart && this.filters.expirationStart !== "0" && expiration < new Date(this.filters.expirationStart)) return false;
   
             if (this.filters.search) {
               const searchVal = Object.values(row).join(' ').toLowerCase();
@@ -428,6 +445,34 @@
       }
     }
   };
+
+  function sortDates(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = a.hasOwnProperty(key) ? new Date(a[key]) : 0;
+            const valB = b.hasOwnProperty(key) ? new Date(b[key]) : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
+
+    function sortStrings(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = (a.hasOwnProperty(key) && a[key]) ? a[key].toString().toLowerCase() : 0;
+            const valB = (b.hasOwnProperty(key) && b[key]) ? b[key].toString().toLowerCase() : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
+
+    function sortNumbers(vue, key) {
+        vue.data.sort((a, b) => {
+            const valA = a.hasOwnProperty(key) ? a[key] : 0;
+            const valB = b.hasOwnProperty(key) ? b[key] : 0;
+            if (vue.sortOrder === 'asc') return valA > valB ? 1 : -1;
+            return valA < valB ? 1 : -1;
+        });
+    }
+
   </script>
 <style>
 #table-system-vue {
