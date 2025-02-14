@@ -127,7 +127,7 @@
               <td>{{ row.taker_email }}</td>
               <td>{{ row.expires_at }}</td>
               <td>{{ row.redeemed_at }}</td>
-              <td><button class="btn" @click="fetchResultsPdf(row.id)">Download Results</button></td>
+              <td><button class="btn btn-light" @click="fetchResultsPdf(row.id)">Download Results</button></td>
             </tr>
           </tbody>
         </table>
@@ -159,7 +159,7 @@
         </div>
 
         <!-- Download CSV Button -->
-        <button @click="downloadCSV" class="btn btn-secondary">Download CSV</button>
+        <button @click="downloadCSV" class="btn btn-light">Download CSV</button>
       </div>
     </div>
   </template>
@@ -397,7 +397,6 @@
               // Do Nothing.
             }
             else if (this.filters.expirationWithinDays && this.filters.expirationWithinDays > 0 && expiration) {
-              debugger;
               if (new Date(expiration) > new Date(new Date().setDate(new Date().getDate() + parseInt(this.filters.expirationWithinDays)))) {
                 return false;
               }
@@ -406,13 +405,11 @@
               }
             }
             else if (this.filters.expirationWithinDays == 0 ) {
-              debugger;
               if (! expiration || expiration < today) {
                 return false;
               }
             }
             else if(this.filters.expirationWithinDays == -1 ) {
-              debugger;
               if (expiration >= today) {
                 return false;
               }
@@ -475,8 +472,15 @@
 
   </script>
 <style>
-#table-system-vue {
-  margin: 2rem;
+
+#table-system-vue .btn-light {
+  border-color: #000;
+  background-color: #f8f9fa;
+  color: #000;
+
+  &:hover {
+    background-color: #e9ecef;
+  }
 }
 
 #table-system-vue .table-controls {

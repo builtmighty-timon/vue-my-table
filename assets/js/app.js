@@ -20350,7 +20350,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         if (_this2.filters.expirationWithinDays === "") {
           // Do Nothing.
         } else if (_this2.filters.expirationWithinDays && _this2.filters.expirationWithinDays > 0 && expiration) {
-          debugger;
           if (new Date(expiration) > new Date(new Date().setDate(new Date().getDate() + parseInt(_this2.filters.expirationWithinDays)))) {
             return false;
           }
@@ -20358,12 +20357,10 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
             return false;
           }
         } else if (_this2.filters.expirationWithinDays == 0) {
-          debugger;
           if (!expiration || expiration < today) {
             return false;
           }
         } else if (_this2.filters.expirationWithinDays == -1) {
-          debugger;
           if (expiration >= today) {
             return false;
           }
@@ -20536,13 +20533,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "table-per-page-control"
+  "class": "form-group table-per-page-control"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "table-per-page"
+    "for": "table-per-page",
+    "class": "form-label"
   }, "Rows per page:", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "table-per-page",
+    "class": "form-select",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.localItemsPerPage = $event;
     })
@@ -20843,7 +20842,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: row.test_code
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.test_code), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.test), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.language), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.order_num), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.taker_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.taker_email), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.expires_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.redeemed_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn",
+      "class": "btn btn-light",
       onClick: function onClick($event) {
         return $options.fetchResultsPdf(row.id);
       }
@@ -20876,7 +20875,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[9] || (_cache[9] = function () {
       return $options.downloadCSV && $options.downloadCSV.apply($options, arguments);
     }),
-    "class": "btn btn-secondary"
+    "class": "btn btn-light"
   }, "Download CSV")])]);
 }
 
@@ -20995,7 +20994,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#table-system-vue {\n  margin: 2rem;\n}\n#table-system-vue .table-controls {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  gap: 1rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#table-system-vue .btn-light {\n  border-color: #000;\n  background-color: #f8f9fa;\n  color: #000;\n&:hover {\n    background-color: #e9ecef;\n}\n}\n#table-system-vue .table-controls {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  gap: 1rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

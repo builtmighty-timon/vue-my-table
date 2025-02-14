@@ -1,7 +1,7 @@
 <template>
-    <div class="table-per-page-control">
-        <label for="table-per-page">Rows per page:</label>
-        <select id="table-per-page" v-model="localItemsPerPage">
+    <div class="form-group table-per-page-control">
+        <label for="table-per-page" class="form-label">Rows per page:</label>
+        <select id="table-per-page" class="form-select" v-model="localItemsPerPage">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
