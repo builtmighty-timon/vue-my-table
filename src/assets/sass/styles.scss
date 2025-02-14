@@ -1,0 +1,89 @@
+#vue-table-app .search-field-row {
+    position: relative;
+}
+
+#vue-table-app .clear-search {
+    cursor: pointer;
+}
+
+#vue-table-app .btn {
+    background-color: #0d6efd;
+}
+
+#vue-table-app .clear-search {
+    position: absolute;
+    right: 1rem;
+    top: 3.5rem;
+}
+
+#vue-table-app .clear-search a {
+    color: blue;
+    text-decoration: none;
+}
+
+#vue-table-app .table-filters > .form-group {
+    height: 2rem;
+}
+
+#vue-table-app select#language {
+    height: 3.2rem;
+}
+
+#vue-table-app label {
+    font-weight: bold;
+}
+
+#vue-table-app .input-group-append {
+    height: 100%;
+}
+
+#vue-table-app .input-group-append span {
+    height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: transparent;
+}
+
+#vue-table-app thead,
+#vue-table-app thead tr {
+        border: none;
+}
+
+#vue-table-app th {
+    color: darkslategrey;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+#vue-table-app .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#vue-table-app .pagination-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #0a4b78;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #0a4b78;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+}
+
+#vue-table-app .pagination-controls button.active {
+    font-weight: bold;
+    border: 2px solid #000;
+}
+
+#vue-table-app .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
