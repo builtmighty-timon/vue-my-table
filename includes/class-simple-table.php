@@ -12,6 +12,10 @@ class Simple_Table_Filter {
             return [];
         }
 
+        if ( ! user_can( wp_get_current_user(), 'manage_options' )) {
+            return [];
+        }
+
         $this->_org_id = $org_id;
 
 	    // Sample data from PHP array (replace with DB query results as needed).
