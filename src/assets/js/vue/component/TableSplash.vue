@@ -17,7 +17,7 @@
       <div class="summary-heading">
         <div>Tests Summary</div>
         <div>
-          <a @click="setSplashState(false)">View Test Details</a>
+          <a @click="setSplashState(false)">View Test Details &gt;</a>
         </div>
       </div>
       <div class="summary-body">
@@ -120,11 +120,11 @@ export default {
 
 .table-splash-vue .summary-heading {
   margin: 0;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: salmon;
+  background-color: mistyrose;
   font-size: 1.3rem;
   border-bottom: 2px solid #c3a253;
   gap: 1rem;

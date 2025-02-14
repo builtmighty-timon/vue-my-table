@@ -210,6 +210,7 @@
       filters: {
         handler(newFilters) {
           this.$emit('update:filters', newFilters);
+          this.resetPage();
         },
         deep: true
       },
@@ -217,6 +218,7 @@
         handler(newShowSplash) {
           this.$emit('update:showSplash', newShowSplash);
           this.$emit('update:tableData', this.tableData);
+          this.resetPage();
         }
       },
       itemsPerPage: {
@@ -226,7 +228,6 @@
           this.resetPage();
         }
       }
-
     },
     methods: {
       clearSearch() {
