@@ -20597,20 +20597,18 @@ var _hoisted_3 = {
 var _hoisted_4 = {
   "class": "summary-body"
 };
-var _hoisted_5 = {
-  "class": "faqs-link"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TestTypeSummary = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TestTypeSummary");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "/buy-now",
     "class": "order-tests btn btn-primary"
-  }, "Order Tests")], -1 /* HOISTED */)), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, "Order Tests")], -1 /* HOISTED */)), _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "dotted-border flex-column update-tax-exempt-button-container"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "For United States and Canada"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "javascript:void(0)",
     "class": "btn btn-primary"
-  }, "Update Tax Exempt Status")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Tests Summary", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, "Update Tax Exempt Status")])], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Tests Summary", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": "blue",
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.setSplashState(false);
     })
@@ -20624,9 +20622,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     tableData: $props.tableData,
     onTestSelected: $options.filterByTestType,
     onTestSelectedWithExpiry: $options.filterByTestTypeAndDays
-  }, null, 8 /* PROPS */, ["tableData", "onTestSelected", "onTestSelectedWithExpiry"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    onClick: _cache[1] || (_cache[1] = function () {})
-  }, "FAQs")])]);
+  }, null, 8 /* PROPS */, ["tableData", "onTestSelected", "onTestSelectedWithExpiry"])])]), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "faqs-link"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "https://www.enneagraminstitute.com/faqs"
+  }, "FAQs")], -1 /* HOISTED */))]);
 }
 
 /***/ }),
@@ -21000,7 +21000,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.table-splash-vue.flex-column,\n.table-splash-vue .flex-column {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: center;\n  align-items: center;\n}\n.table-splash-vue .dotted-border {\n  border: 2px dashed #c3a253;\n}\n.table-splash-vue .solid-border {\n  border: 2px solid #c3a253;\n}\n.table-splash-vue .update-tax-exempt-button-container {\n  padding: 1rem;\n  max-width: 400px;\n}\n.table-splash-vue .tests-summary {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n.table-splash-vue .summary-heading {\n  margin: 0;\n  padding: 0.5rem 1rem;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: mistyrose;\n  font-size: 1.3rem;\n  border-bottom: 2px solid #c3a253;\n  gap: 1rem;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-heading {\n    flex-direction: row;\n}\n}\n.table-splash-vue .summary-body {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: space-around;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body {\n    flex-direction: row;\n    gap: 0.5rem;\n}\n}\n.table-splash-vue .summary-body > div {\n  padding: 1rem;\n  width: 100%;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body > div {\n    width: 50%;\n    margin: 1rem 0;\n}\n.table-splash-vue .summary-body > div:first-child {\n    border-right: 2px solid #c3a253;\n}\n}\n.table-splash-vue .link-title {\n  font-size: 1.4rem;\n  font-weight: 300;\n  border-bottom: 1px solid lightgray;\n}\n.table-splash-vue .available-codes {\n  margin-top: 1rem;\n  font-size: 1.2rem;\n}\n.table-splash-vue .expiring-info {\n  margin-top: 1.5rem;\n  font-size: 0.7rem;\n}\n.table-splash-vue .tests-summary a {\n  color: blue;\n  cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.table-splash-vue.flex-column,\n.table-splash-vue .flex-column {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: center;\n  align-items: center;\n}\n.table-splash-vue .dotted-border {\n  border: 2px dashed #c3a253;\n}\n.table-splash-vue .solid-border {\n  border: 2px solid #c3a253;\n}\n.table-splash-vue .update-tax-exempt-button-container {\n  padding: 1rem;\n  max-width: 400px;\n}\n.table-splash-vue .tests-summary {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n}\n.table-splash-vue .summary-heading {\n  margin: 0;\n  padding: 0.5rem 1rem;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: mistyrose;\n  font-size: 1.3rem;\n  border-bottom: 2px solid #c3a253;\n  gap: 1rem;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-heading {\n    flex-direction: row;\n}\n}\n.table-splash-vue .summary-body {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n  justify-content: space-around;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body {\n    flex-direction: row;\n    gap: 0.5rem;\n}\n}\n.table-splash-vue .summary-body > div {\n  padding: 1rem;\n  width: 100%;\n}\n@media screen and (min-width: 768px) {\n.table-splash-vue .summary-body > div {\n    width: 50%;\n    margin: 1rem 0;\n}\n.table-splash-vue .summary-body > div:first-child {\n    border-right: 2px solid #c3a253;\n}\n}\n.table-splash-vue .link-title {\n  font-size: 1.4rem;\n  font-weight: 300;\n  border-bottom: 1px solid lightgray;\n}\n.table-splash-vue .available-codes {\n  margin-top: 1rem;\n  font-size: 1.2rem;\n}\n.table-splash-vue .expiring-info {\n  margin-top: 1.5rem;\n  font-size: 0.7rem;\n}\n.table-splash-vue \n.faqs-link a,\n.tests-summary a { \n\n  cursor: pointer;\n  color: black;\n  text-decoration: none;\n.blue {\n    color: blue;\n}\n&:hover {\n    text-decoration: underline;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
