@@ -17,7 +17,7 @@
       <div class="summary-heading">
         <div>Tests Summary</div>
         <div>
-          <a @click="setSplashState(false)">View Test Details &gt;</a>
+          <a class="blue" @click="setSplashState(false)">View Test Details &gt;</a>
         </div>
       </div>
       <div class="summary-body">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="faqs-link">
-      <a @click="">FAQs</a>
+      <a href="https://www.enneagraminstitute.com/faqs">FAQs</a>
     </div>
   </div>
 </template>
@@ -186,8 +186,19 @@ export default {
   font-size: 0.7rem;
 }
 
-.table-splash-vue .tests-summary a {
-  color: blue;
+.table-splash-vue 
+.faqs-link a,
+.tests-summary a { 
+
   cursor: pointer;
+  color: black;
+  text-decoration: none;
+
+  .blue {
+    color: blue; 
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>
