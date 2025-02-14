@@ -3,7 +3,7 @@
   <div class="table-splash-vue flex-column">
 
     <div>
-      <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
+      <a href="/buy-now" class="order-tests btn btn-primary">Order Tests</a>
     </div>
 
     <div class="dotted-border flex-column update-tax-exempt-button-container">

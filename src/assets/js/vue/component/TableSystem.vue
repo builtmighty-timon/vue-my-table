@@ -1,6 +1,6 @@
 <template>
     <div id="table-system-vue" class="container">
-      <a href="/special-shop-page" class="order-tests btn btn-primary">Order Tests</a>
+      <a href="/buy-now" class="order-tests btn btn-primary">Order Tests</a>
   
       <div class="row g-3 mb-3 table-filters">
         <!-- Search Filter -->
