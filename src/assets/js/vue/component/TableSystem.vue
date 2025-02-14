@@ -86,6 +86,7 @@
                   <option value="">All</option>
                   <option value="0">Not Expired</option>
                   <option value="-1">Expired</option>
+                  <option value="60">Within 60 days</option>
                 </select>
               </div>
             </div>
@@ -150,11 +151,12 @@
             </button>
             <button
               @click="nextPage"
-              :disabled="currentPage === Math.ceil(filterData(data).length / itemsPerPage)"
+              :disabled="0 == Math.ceil(filterData(data).length / itemsPerPage) || currentPage === Math.ceil(filterData(data).length / itemsPerPage)"
             >
               Next
             </button>
-            <span>Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
+            <span v-if="Math.ceil(filterData(data).length / itemsPerPage) > 0">Page {{ currentPage }} of {{ Math.ceil(filterData(data).length / itemsPerPage) }}</span>
+            <span v-else>Page 0 of 0</span>
           </div>
         </div>
 
@@ -236,7 +238,7 @@
         this.filters.search = '';
         this.filters.testCode = '';
         this.filters.test = '';
-        this.filters.expirationWithinDays = '0';
+        this.filters.expirationWithinDays = '';
         this.filters.language = '';
         this.resetPage();
       },

@@ -20064,6 +20064,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       });
       this.$emit('update:filters', updatedFilters);
     },
+    filterByTestTypeAndDays: function filterByTestTypeAndDays(data) {
+      var updatedFilters = _objectSpread(_objectSpread({}, this.filters), {}, {
+        test: data.testType,
+        expirationWithinDays: data.days
+      });
+      this.$emit('update:filters', updatedFilters);
+    },
     setSplashState: function setSplashState(showSplash) {
       this.$emit('update:showSplash', showSplash);
     }
@@ -20201,7 +20208,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       this.filters.search = '';
       this.filters.testCode = '';
       this.filters.test = '';
-      this.filters.expirationWithinDays = '0';
+      this.filters.expirationWithinDays = '';
       this.filters.language = '';
       this.resetPage();
     },
@@ -20445,6 +20452,12 @@ __webpack_require__.r(__webpack_exports__);
     emitTestTypeSelection: function emitTestTypeSelection(testType) {
       this.$emit('testSelected', testType);
     },
+    emitTestTypeSelectionWithExpiry: function emitTestTypeSelectionWithExpiry(testType, expiry) {
+      this.$emit('testSelectedWithExpiry', {
+        testType: testType,
+        days: expiry
+      });
+    },
     getExpiryWithinDays: function getExpiryWithinDays() {
       var _this = this;
       var days = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -20604,12 +20617,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "View Test Details >")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TestTypeSummary, {
     testType: 'RHETI',
     tableData: $props.tableData,
-    onTestSelected: $options.filterByTestType
-  }, null, 8 /* PROPS */, ["tableData", "onTestSelected"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TestTypeSummary, {
+    onTestSelected: $options.filterByTestType,
+    onTestSelectedWithExpiry: $options.filterByTestTypeAndDays
+  }, null, 8 /* PROPS */, ["tableData", "onTestSelected", "onTestSelectedWithExpiry"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TestTypeSummary, {
     testType: 'IVQ',
     tableData: $props.tableData,
-    onTestSelected: $options.filterByTestType
-  }, null, 8 /* PROPS */, ["tableData", "onTestSelected"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onTestSelected: $options.filterByTestType,
+    onTestSelectedWithExpiry: $options.filterByTestTypeAndDays
+  }, null, 8 /* PROPS */, ["tableData", "onTestSelected", "onTestSelectedWithExpiry"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     onClick: _cache[1] || (_cache[1] = function () {})
   }, "FAQs")])]);
 }
@@ -20721,6 +20736,12 @@ var _hoisted_31 = {
 var _hoisted_32 = ["disabled"];
 var _hoisted_33 = ["onClick"];
 var _hoisted_34 = ["disabled"];
+var _hoisted_35 = {
+  key: 0
+};
+var _hoisted_36 = {
+  key: 1
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TablePerPageControl = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TablePerPageControl");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_cache[21] || (_cache[21] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -20818,7 +20839,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: "0"
   }, "Not Expired", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "-1"
-  }, "Expired", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, "Expired", -1 /* HOISTED */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "60"
+  }, "Within 60 days", -1 /* HOISTED */)]), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.filters.expirationWithinDays]])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Language Filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_cache[19] || (_cache[19] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "language",
     "class": "form-label"
   }, "Language", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
@@ -20872,8 +20895,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[8] || (_cache[8] = function () {
       return $options.nextPage && $options.nextPage.apply($options, arguments);
     }),
-    disabled: $data.currentPage === Math.ceil($options.filterData($data.data).length / $data.itemsPerPage)
-  }, " Next ", 8 /* PROPS */, _hoisted_34), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Page " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPage) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.ceil($options.filterData($data.data).length / $data.itemsPerPage)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Download CSV Button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: 0 == Math.ceil($options.filterData($data.data).length / $data.itemsPerPage) || $data.currentPage === Math.ceil($options.filterData($data.data).length / $data.itemsPerPage)
+  }, " Next ", 8 /* PROPS */, _hoisted_34), Math.ceil($options.filterData($data.data).length / $data.itemsPerPage) > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_35, "Page " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPage) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.ceil($options.filterData($data.data).length / $data.itemsPerPage)), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_36, "Page 0 of 0"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Download CSV Button "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[9] || (_cache[9] = function () {
       return $options.downloadCSV && $options.downloadCSV.apply($options, arguments);
     }),
@@ -20909,7 +20932,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.emitTestTypeSelection($props.testType);
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.testType), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, "Available Codes: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.countForTestType), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, "Expiring within 60 days: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getExpiryWithinDays(60)), 1 /* TEXT */)])]);
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.testType), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, "Available Codes: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.countForTestType), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.emitTestTypeSelectionWithExpiry($props.testType, 60);
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, "Expiring within 60 days: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getExpiryWithinDays($props.testType, 60)), 1 /* TEXT */)])]);
 }
 
 /***/ }),

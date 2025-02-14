@@ -21,8 +21,8 @@
         </div>
       </div>
       <div class="summary-body">
-        <TestTypeSummary :testType="'RHETI'" :tableData="tableData" @testSelected="filterByTestType"/>
-        <TestTypeSummary :testType="'IVQ'" :tableData="tableData" @testSelected="filterByTestType"/>
+        <TestTypeSummary :testType="'RHETI'" :tableData="tableData" @testSelected="filterByTestType" @testSelectedWithExpiry="filterByTestTypeAndDays"/>
+        <TestTypeSummary :testType="'IVQ'" :tableData="tableData" @testSelected="filterByTestType" @testSelectedWithExpiry="filterByTestTypeAndDays"/>
       </div>
     </div>
 
@@ -57,6 +57,10 @@ export default {
   methods: {
     filterByTestType(testType) {
       const updatedFilters = { ...this.filters, test: testType };
+      this.$emit('update:filters', updatedFilters);
+    },
+    filterByTestTypeAndDays(data) {
+      const updatedFilters = { ...this.filters, test: data.testType, expirationWithinDays: data.days };
       this.$emit('update:filters', updatedFilters);
     },
     setSplashState(showSplash) {
